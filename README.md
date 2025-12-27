@@ -2,7 +2,7 @@
 
 A compassionate AI-driven platform designed to provide mental health support through thoughtful conversation and prompt engineering tailored to your well-being. 💙
 
-> ✨ Watch our presentation:
+> ✨ Watch my presentation:
 > [CheerCloud - YouTube](https://youtu.be/y0ESCc-DM40)
 
 ---
@@ -10,7 +10,7 @@ A compassionate AI-driven platform designed to provide mental health support thr
 ## 🏆 Project Highlights
 
 **Personalized Mental Health Support, Anytime, Anywhere!**  
-With **CheerCloud**, we’ve harnessed the power of AI to create an empathetic chatbot that understands and adapts to user needs through advanced prompt engineering. Built using cutting-edge technologies like React 19 and Clerk authentication, our platform ensures a seamless, secure, and intuitive experience.
+With **CheerCloud**, I've harnessed the power of AI to create an empathetic chatbot that understands and adapts to user needs through advanced prompt engineering. Built using cutting-edge technologies like React 19 and Clerk authentication, this platform ensures a seamless, secure, and intuitive experience.
 
 ---
 
@@ -24,13 +24,13 @@ With **CheerCloud**, we’ve harnessed the power of AI to create an empathetic c
 
 ---
 
-## 🌟 Our Story: A Mission Born from Experience  
+## 🌟 My Story: A Mission Born from Experience  
 
-We are a group of developers who know firsthand what it’s like to navigate the challenges of ADHD, anxiety, and other mental health struggles. This project began as a way to help ourselves stay grounded, focused, and supported, but it quickly grew into something bigger—a platform to support anyone on their mental health journey.  
+As a developer, I know firsthand what it's like to navigate the challenges of ADHD, anxiety, and other mental health struggles. This project began as a way to help myself stay grounded, focused, and supported, but it quickly grew into something bigger—a platform to support anyone on their mental health journey.  
 
-Building **CheerCloud** has been both a challenge and a form of healing. Each of us contributed our unique strengths, turning personal struggles into motivation. With cutting-edge AI and thoughtful design, we’ve created a safe space where users can feel heard, understood, and supported.  
+Building **CheerCloud** has been both a challenge and a form of healing. I've poured my passion and personal experiences into this project, turning personal struggles into motivation. With cutting-edge AI and thoughtful design, I've created a safe space where users can feel heard, understood, and supported.  
 
-We hope this platform becomes a source of comfort and empowerment for anyone who needs it. **CheerCloud** isn’t just a tool—it’s a reminder that you’re not alone, and together, we can navigate life’s challenges. 💙  
+I hope this platform becomes a source of comfort and empowerment for anyone who needs it. **CheerCloud** isn't just a tool—it's a reminder that you're not alone, and together, we can navigate life's challenges. 💙  
 
 --- 
 
@@ -101,12 +101,12 @@ We hope this platform becomes a source of comfort and empowerment for anyone who
 
 1. **Clone the Repository**  
    ```bash
-   git clone https://github.com/your-username/cheercloud.git
+   git clone https://github.com/Jodie-Wang55555/CheerCloud_MentalHealthAI.git
    ```
 
 2. **Install Dependencies**  
    ```bash
-   cd cheercloud
+   cd CheerCloud_MentalHealthAI
    npm install
    ```
 
@@ -142,21 +142,10 @@ We hope this platform becomes a source of comfort and empowerment for anyone who
 
 ---
 
-## ✨ Contributors
-
-This project was developed by a passionate team of mental health advocates and developers. 🌟
-
-- 👩‍💻 **Jianing Yin**: [@CatherineYin1213](https://github.com/CatherineYin1213)
-- 👩‍💻 **Rongman Xu**: [@忆蒹葭](https://github.com/Gevenal)
-- 👩‍💻 **Yadi Wang**: [@Aqua0812](https://github.com/Aqua0812)
-- 👩‍💻 **Yichun Wang**: [@Jodie-Wang55555](https://github.com/Jodie-Wang55555)
-
----
-
 ## 🏆 Inspirtation
 
 This project was inspired by [Lama AI](https://github.com/safak/chatgpt-clone/tree/starter) (click the link for details).
 
 ---
 
-Thank you for choosing **CheerCloud** to support your mental well-being. 🌟 Let’s work together for a healthier mind and a brighter future! ☁
+Thank you for choosing **CheerCloud** to support your mental well-being. 🌟 Together, we can work towards a healthier mind and a brighter future! ☁
