@@ -18,12 +18,22 @@ app.use(
 
 app.use(express.json());
 
+let mongoConnected = false;
+
 const connect = async () => {
     try {
-        await mongoose.connect(process.env.MONGO);
-        console.log("Connected to MongoDB");
+        if (process.env.MONGO && process.env.MONGO !== 'your-mongodb-uri') {
+            await mongoose.connect(process.env.MONGO);
+            console.log("✅ Connected to MongoDB");
+            mongoConnected = true;
+        } else {
+            console.log("⚠️  MongoDB not configured - running without database (chats won't be saved)");
+            mongoConnected = false;
+        }
     } catch (err) {
-        console.log(err);
+        console.log("⚠️  MongoDB connection failed:", err.message);
+        console.log("⚠️  Running without database (chats won't be saved)");
+        mongoConnected = false;
     }
 }
 
@@ -36,6 +46,20 @@ const imagekit = new ImageKit({
 app.get("/api/upload", (req, res) => {
     const result = imagekit.getAuthenticationParameters();
     res.send(result);
+});
+
+// 测试端点 - 无需认证和数据库
+app.post("/api/test-chat", async (req, res) => {
+    try {
+        const { message } = req.body;
+        res.json({ 
+            success: true, 
+            response: `AI 收到你的消息: "${message}"。这是一个测试响应。请配置完整的 MongoDB 和 ImageKit 后使用完整功能。`
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error processing message");
+    }
 });
 
 // app.get("/api/test", requireAuth(), (req, res) => {
@@ -105,7 +129,11 @@ app.get("/api/userchats", requireAuth(), async (req, res) => {
     try {
         const userChats = await UserChats.find({ userId });
 
-        res.status(200).send(userChats[0].chats);
+        if (!userChats.length) {
+            res.status(200).send([]);
+        } else {
+            res.status(200).send(userChats[0].chats);
+        }
     } catch (err) {
         console.log(err);
         res.status(500).send("Error fetching userchats!")

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./newPrompt.css";
 import Upload from "../upload/Upload";
 import { IKImage } from "imagekitio-react";
-import model from "../../lib/gemini";
+import model, { prompt as systemPrompt } from "../../lib/gemini";
 import Markdown from "react-markdown";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigationType } from "react-router-dom";
@@ -22,23 +22,16 @@ const NewPrompt = ({ data }) => {
     history: [
       {
         role: "user",
-        parts: [{ text: "Hello" }],
+        parts: [{ text: "请作为一名富有同情心和共情能力的心理治疗师，专注于情感支持。" }],
       },
       {
         role: "model",
-        parts: [
-          {
-            text: `You are a compassionate and empathetic psychological therapist specializing in emotional support. Your goal is to ensure users feel heard and understood while avoiding direct medical advice. Guidelines:
-- Use a warm, conversational tone, closely aligning responses to the user's questions.
-- Responses must be limited to 5 sentences or 500 characters.
-- Avoid repetitive language and provide clear, practical suggestions without being overly optimistic.
-- Include subtle and context-appropriate emojis that convey empathy.`,
-          },
-        ],
+        parts: [{ text: systemPrompt }],
       },
     ],
     generationConfig: {
-      // maxOutputTokens: 100,
+      maxOutputTokens: 500,
+      temperature: 0.9,
     },
   });
 
@@ -91,20 +84,25 @@ const NewPrompt = ({ data }) => {
     if (!isInitial) setQuestion(text);
 
     try {
+      console.log("📤 发送消息到 Gemini AI:", text);
       const result = await chat.sendMessageStream(
         Object.entries(img.aiData).length ? [img.aiData, text] : [text]
       );
       let accumulatedText = "";
+      console.log("✅ 开始接收 AI 回复...");
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
-        console.log(chunkText);
+        console.log("📥 接收到 chunk:", chunkText);
         accumulatedText += chunkText;
         setAnswer(accumulatedText);
       }
+      console.log("✅ AI 回复完成:", accumulatedText);
 
       mutation.mutate();
     } catch (err) {
-      console.log(err);
+      console.error("❌ AI 调用错误:", err);
+      console.error("错误详情:", err.message);
+      setAnswer("抱歉，AI 服务暂时无法响应。请稍后再试。错误: " + err.message);
     }
   };
 
