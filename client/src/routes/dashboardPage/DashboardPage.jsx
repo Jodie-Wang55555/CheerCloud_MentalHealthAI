@@ -41,25 +41,28 @@ const DashboardPage = () => {
           <h1>CheerCloud</h1>
         </div>
         <div className="options">
-          <div className="option">
-            <img src="/chat.png" alt="" />
-            <span>Start a Mental Wellness Check</span>
+          <div className="option" onClick={() => mutation.mutate("I'd like to start a mental wellness check")}>
+            <img src="/chat.png" alt="Mental Wellness" />
+            <h3>Mental Wellness Check</h3>
+            <p>Share your feelings and get personalized support to improve your mental well-being.</p>
           </div>
 
-          <div className="option">
-            <img src="/image.png" alt="" />
-            <span>Guided Relaxation Exercises</span>
+          <div className="option" onClick={() => mutation.mutate("Can you guide me through a relaxation exercise?")}>
+            <img src="/image.png" alt="Relaxation" />
+            <h3>Guided Relaxation</h3>
+            <p>Practice mindfulness with calming exercises designed to reduce stress and anxiety.</p>
           </div>
 
-          <div className="option">
-            <img src="/code.png" alt="" />
-            <span>Daily Affirmations</span>
+          <div className="option" onClick={() => mutation.mutate("Give me a daily affirmation")}>
+            <img src="/code.png" alt="Affirmations" />
+            <h3>Daily Affirmations</h3>
+            <p>Start your day with positive, uplifting messages to boost your confidence and mood.</p>
           </div>
         </div>
       </div>
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
-          <input type="text" name="text" placeholder='Ask me anything...' autocomplete="new-password"  />
+          <input type="text" name="text" placeholder='Ask me anything...' autoComplete="new-password"  />
           <button>
             <img src="/arrow1.png" alt="" />
           </button>

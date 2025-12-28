@@ -1,46 +1,95 @@
 .endChat {
-    padding-bottom: 100px;
+    height: 24px;
 }
+
+.newForm {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto 28px auto;
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 8px;
+    transition: all 0.3s ease;
+}
+
+.newForm:hover {
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.newForm input {
+    flex: 1;
+    padding: 14px 14px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #2d3748;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.newForm input::placeholder {
+    color: #a0aec0;
+}
+
+.newForm button, 
+.newForm label {
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.newForm button img,
+.newForm label img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1);
+}
+
+.newForm button:hover,
+.newForm label:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.newForm button:active,
+.newForm label:active {
+    transform: scale(0.95);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
     .newForm {
-        width: 50%;
-        left: 50%;
-        transform: translateX(-50%);
-        position: absolute;
-        margin-bottom: 25px;
-        bottom: 0;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 0px 20px;
-
-        input {
-            flex: 1;
-            padding: 20px;
-            border: none;
-            outline: none;
-            background-color: transparent;
-            color: #000000;
-        }
-
-        button, label {
-            border-radius: 50%;
-            background-color: #000000;
-            border: none;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-
-            img {
-                width: 16px;
-                height: 16px;
-            }
-        }
-
-        button:hover {
-            background-color: #ffe1bd;
-        }
+        width: 95%;
+        padding: 6px 10px;
     }
+    
+    .newForm input {
+        padding: 14px 10px;
+        font-size: 14px;
+    }
+    
+    .newForm button,
+    .newForm label {
+        padding: 10px;
+        width: 36px;
+        height: 36px;
+    }
+}

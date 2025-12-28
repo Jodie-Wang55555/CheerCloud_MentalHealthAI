@@ -48,13 +48,13 @@ app.get("/api/upload", (req, res) => {
     res.send(result);
 });
 
-// 测试端点 - 无需认证和数据库
+// Test endpoint - no auth or database required
 app.post("/api/test-chat", async (req, res) => {
     try {
         const { message } = req.body;
         res.json({ 
             success: true, 
-            response: `AI 收到你的消息: "${message}"。这是一个测试响应。请配置完整的 MongoDB 和 ImageKit 后使用完整功能。`
+            response: `AI received your message: "${message}". This is a test response. Please configure MongoDB and ImageKit for full functionality.`
         });
     } catch (err) {
         console.log(err);
@@ -177,6 +177,50 @@ app.put("/api/chats/:id", requireAuth(), async (req, res)=>{
         res.status(500).send("Error adding conversation!")
     }
 })
+
+app.delete("/api/chats/:id", requireAuth(), async (req, res) => {
+    const userId = req.auth.userId;
+
+    try {
+        // Delete the chat
+        await Chat.deleteOne({ _id: req.params.id, userId });
+        
+        // Remove from user's chat list
+        await UserChats.updateOne(
+            { userId: userId },
+            { $pull: { chats: { _id: req.params.id } } }
+        );
+
+        res.status(200).send("Chat deleted successfully!");
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error deleting chat!");
+    }
+});
+
+app.patch("/api/chats/:id", requireAuth(), async (req, res) => {
+    const userId = req.auth.userId;
+    const { title } = req.body;
+
+    try {
+        // Update the chat title in Chat collection
+        await Chat.updateOne(
+            { _id: req.params.id, userId },
+            { $set: { title: title } }
+        );
+
+        // Update the title in UserChats collection
+        await UserChats.updateOne(
+            { userId: userId, "chats._id": req.params.id },
+            { $set: { "chats.$.title": title } }
+        );
+
+        res.status(200).send("Chat title updated successfully!");
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error updating chat title!");
+    }
+});
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

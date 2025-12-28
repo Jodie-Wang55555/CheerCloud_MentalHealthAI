@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./newPrompt.css";
 import Upload from "../upload/Upload";
 import { IKImage } from "imagekitio-react";
-import model, { prompt as systemPrompt } from "../../lib/gemini";
+import { callCheerCloudAI } from "../../lib/gemini";
 import Markdown from "react-markdown";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigationType } from "react-router-dom";
@@ -16,23 +16,6 @@ const NewPrompt = ({ data }) => {
     error: "",
     dbData: {},
     aiData: {},
-  });
-
-  const chat = model.startChat({
-    history: [
-      {
-        role: "user",
-        parts: [{ text: "请作为一名富有同情心和共情能力的心理治疗师，专注于情感支持。" }],
-      },
-      {
-        role: "model",
-        parts: [{ text: systemPrompt }],
-      },
-    ],
-    generationConfig: {
-      maxOutputTokens: 500,
-      temperature: 0.9,
-    },
   });
 
   const endRef = useRef(null);
@@ -84,25 +67,33 @@ const NewPrompt = ({ data }) => {
     if (!isInitial) setQuestion(text);
 
     try {
-      console.log("📤 发送消息到 Gemini AI:", text);
-      const result = await chat.sendMessageStream(
-        Object.entries(img.aiData).length ? [img.aiData, text] : [text]
-      );
-      let accumulatedText = "";
-      console.log("✅ 开始接收 AI 回复...");
-      for await (const chunk of result.stream) {
-        const chunkText = chunk.text();
-        console.log("📥 接收到 chunk:", chunkText);
-        accumulatedText += chunkText;
-        setAnswer(accumulatedText);
+      // Call AI (no streaming)
+      const responseText = await callCheerCloudAI(text);
+      
+      // UI layer typewriter effect
+      setAnswer("");
+      for (let i = 0; i < responseText.length; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        setAnswer(responseText.slice(0, i + 1));
       }
-      console.log("✅ AI 回复完成:", accumulatedText);
-
+      
+      console.log("✅ Rendering Complete");
       mutation.mutate();
     } catch (err) {
-      console.error("❌ AI 调用错误:", err);
-      console.error("错误详情:", err.message);
-      setAnswer("抱歉，AI 服务暂时无法响应。请稍后再试。错误: " + err.message);
+      console.error("❌ AI Call Error:", err);
+      
+      // User-friendly error message displayed in chat history
+      let friendlyMessage = "Sorry, I'm having trouble responding right now. 💜";
+      
+      if (err.message && err.message.includes("quota")) {
+        friendlyMessage = "I've reached my daily chat limit. Please try again tomorrow, or contact support for more help. 💜";
+      } else if (err.message && err.message.includes("network")) {
+        friendlyMessage = "Connection issue detected. Please check your internet and try again. 💜";
+      }
+      
+      // Set error message as answer and save to chat history
+      setAnswer(friendlyMessage);
+      mutation.mutate();
     }
   };
 
@@ -139,12 +130,6 @@ const NewPrompt = ({ data }) => {
           width="300"
           transformation={[{ width: "380" }]}
         />
-      )}
-      {question && <div className="message user">{question}</div>}
-      {answer && (
-        <div className="message">
-          <Markdown>{answer}</Markdown>
-        </div>
       )}
       <div className="endChat" ref={endRef}></div>
       <form className="newForm" onSubmit={handleSubmit} ref={formRef}>
