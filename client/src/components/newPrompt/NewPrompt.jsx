@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./newPrompt.css";
 import Upload from "../upload/Upload";
 import { IKImage } from "imagekitio-react";
-import { callCheerCloudAI } from "../../lib/gemini";
+import { callCheerCloudAI, saveEmotionMemory } from "../../lib/gemini";
 import Markdown from "react-markdown";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigationType } from "react-router-dom";
@@ -79,6 +79,16 @@ const NewPrompt = ({ data }) => {
       
       console.log("✅ Rendering Complete");
       mutation.mutate();
+
+      // 对话完成后异步保存情绪记忆
+      if (data?.history) {
+        const fullConversation = [
+          ...data.history.map((m) => ({ role: m.role, text: m.parts?.[0]?.text || "" })),
+          { role: "user", text: question || text },
+          { role: "model", text: responseText },
+        ];
+        saveEmotionMemory(fullConversation);
+      }
     } catch (err) {
       console.error("❌ AI Call Error:", err);
       

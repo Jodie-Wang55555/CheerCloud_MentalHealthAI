@@ -1,0 +1,30 @@
+fastapi==0.115.5
+uvicorn==0.32.1
+python-dotenv==1.0.1
+pydantic==2.10.3
+
+# LangChain
+langchain==0.3.12
+langchain-google-genai==2.0.7
+langchain-community==0.3.12
+langchain-chroma==0.1.4
+langsmith==0.2.3
+
+# Vector DB
+chromadb==0.5.23
+
+# Ollama Embedding
+langchain-ollama==0.2.2
+
+# Cohere Reranker
+cohere==5.13.0
+langchain-cohere==0.3.3
+
+# BM25
+rank-bm25==0.2.2
+
+# Google Gemini
+google-generativeai==0.8.3
+
+# HTTP
+httpx==0.28.1

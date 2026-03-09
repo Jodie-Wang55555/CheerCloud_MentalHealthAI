@@ -1,47 +1,65 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+/**
+ * CheerCloud AI - RAG 版本
+ * 调用链路: 前端 → Express → Python FastAPI → Gemini + ChromaDB + Cohere
+ */
 
-const SYSTEM_PROMPT = `You are a compassionate and empathetic psychological therapist specializing in emotional support. Your goal is to make users feel heard, valued, and supported while avoiding direct medical advice.
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-Guidelines:
-- Use a warm, conversational tone with encouraging words.
-- Responses must be limited to 5 sentences or 500 characters.
-- Avoid repetitive language and include actionable, uplifting advice.
-- Express warmth through words rather than emojis for better compatibility.
-- Use encouraging phrases like "You've got this", "I believe in you", "You're doing great".
+console.log("🚀 CheerCloud RAG AI Initialized");
 
-Examples:
-User: "I feel so anxious about tomorrow's presentation."
-Therapist: "That sounds really stressful, and it's okay to feel anxious. Why not try practicing your key points in front of a mirror or someone you trust? Deep breaths can help too. You've prepared for this, and I believe you'll do great!"
-
-User: "I feel stuck and don't know what to do."
-Therapist: "I'm so sorry you're feeling this way—it can be overwhelming. Sometimes it helps to focus on one small thing you can control right now, even if it's as simple as making a to-do list. Remember, you're not alone, and it's okay to take things at your own pace. You've got this, one step at a time!"
-`;
-
-console.log("🚀 CheerCloud AI Initialization");
-console.log("🔑 API Key:", import.meta.env.VITE_GEMINI_PUBLIC_KEY ? "Configured ✅" : "Not Configured ❌");
-
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_PUBLIC_KEY);
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash",
-});
-
-console.log("✅ Gemini 2.5 Flash Initialized");
-
-// Unified AI call entry point
-export async function callCheerCloudAI(userMessage) {
+/**
+ * 主对话接口 - 完整 RAG 流程
+ * @param {string} userMessage
+ * @param {Array}  history       [{ role, text }]
+ * @returns {Promise<{answer, intent, strategy, is_crisis, citations}>}
+ */
+export async function callCheerCloudAI(userMessage, history = []) {
   try {
-    console.log("📤 Sending message:", userMessage);
-    
-    const prompt = `${SYSTEM_PROMPT}\n\nUser: ${userMessage}\nTherapist:`;
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
-    
-    console.log("✅ AI Response:", responseText);
-    return responseText;
+    console.log("📤 Sending to RAG pipeline:", userMessage);
+
+    const response = await fetch(`${API_URL}/api/ai/chat`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: userMessage,
+        history: history.map((m) => ({ role: m.role, text: m.parts?.[0]?.text || m.text || "" })),
+      }),
+    });
+
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(`AI service error: ${err}`);
+    }
+
+    const data = await response.json();
+    console.log("✅ RAG Response:", data.intent, "|", data.strategy);
+    return data.answer;
+
   } catch (error) {
     console.error("❌ AI Call Failed:", error);
     throw error;
   }
 }
 
-export { SYSTEM_PROMPT as prompt };
+/**
+ * 对话结束后保存情绪知识库
+ * 在每次 chat session 结束时调用
+ * @param {Array} conversation [{ role, text }]
+ */
+export async function saveEmotionMemory(conversation) {
+  try {
+    await fetch(`${API_URL}/api/ai/emotion`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ conversation }),
+    });
+    console.log("💾 Emotion memory saved");
+  } catch (error) {
+    console.warn("⚠️ Failed to save emotion memory:", error.message);
+  }
+}
+
+// 保持向后兼容
+export const prompt = `You are a compassionate mental health AI companion powered by RAG.`;

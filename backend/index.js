@@ -6,6 +6,8 @@ import UserChats from "./models/userChats.js";
 import Chat from "./models/chat.js";
 import { requireAuth } from '@clerk/express'
 
+const AI_SERVICE_URL = process.env.AI_SERVICE_URL || "http://localhost:8000";
+
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -59,6 +61,58 @@ app.post("/api/test-chat", async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).send("Error processing message");
+    }
+});
+
+// ── AI 代理接口：转发到 Python RAG 服务 ──────────────────
+app.post("/api/ai/chat", requireAuth(), async (req, res) => {
+    const userId = req.auth.userId;
+    const { message, history, image_base64, image_mime_type } = req.body;
+
+    try {
+        const aiResponse = await fetch(`${AI_SERVICE_URL}/api/ai/chat`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                user_id: userId,
+                message,
+                history: history || [],
+                image_base64: image_base64 || null,
+                image_mime_type: image_mime_type || null,
+            }),
+        });
+
+        if (!aiResponse.ok) {
+            const err = await aiResponse.text();
+            console.error("[AI Proxy] Error:", err);
+            return res.status(502).json({ error: "AI service error", detail: err });
+        }
+
+        const data = await aiResponse.json();
+        res.status(200).json(data);
+    } catch (err) {
+        console.error("[AI Proxy] Fetch failed:", err.message);
+        res.status(500).json({ error: "AI service unavailable" });
+    }
+});
+
+// ── 对话结束后保存情绪知识库 ─────────────────────────────
+app.post("/api/ai/emotion", requireAuth(), async (req, res) => {
+    const userId = req.auth.userId;
+    const { conversation } = req.body;
+
+    try {
+        const aiResponse = await fetch(`${AI_SERVICE_URL}/api/ai/emotion`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId, conversation }),
+        });
+
+        const data = await aiResponse.json();
+        res.status(200).json(data);
+    } catch (err) {
+        console.error("[Emotion API] Error:", err.message);
+        res.status(500).json({ error: "Failed to save emotion" });
     }
 });
 

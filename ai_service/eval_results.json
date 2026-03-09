@@ -1,0 +1,353 @@
+{
+  "baseline_accuracy": 0.8367346938775511,
+  "rag_accuracy": 0.8571428571428571,
+  "improvement": 0.020408163265306034,
+  "correct": 42,
+  "baseline_correct": 41,
+  "total": 49,
+  "details": [
+    {
+      "message": "I'm so anxious about my job interview tomorrow, I can't slee...",
+      "expected": "anxiety",
+      "predicted": "anxiety",
+      "confidence": 1.0,
+      "correct": true
+    },
+    {
+      "message": "I have a presentation next week and I can't stop panicking...",
+      "expected": "anxiety",
+      "predicted": "anxiety",
+      "confidence": 0.98,
+      "correct": true
+    },
+    {
+      "message": "My heart keeps racing and I don't know why, I'm always worri...",
+      "expected": "anxiety",
+      "predicted": "anxiety",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I keep replaying that conversation in my head over and over...",
+      "expected": "anxiety",
+      "predicted": "anxiety",
+      "confidence": 0.85,
+      "correct": true
+    },
+    {
+      "message": "I don't know why but I just feel unsettled and I can't shake...",
+      "expected": "anxiety",
+      "predicted": "daily",
+      "confidence": 0.85,
+      "correct": false
+    },
+    {
+      "message": "I've been checking my phone constantly waiting to hear back,...",
+      "expected": "anxiety",
+      "predicted": "anxiety",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "My mind keeps jumping to all the things that could go wrong...",
+      "expected": "anxiety",
+      "predicted": "anxiety",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I've been having trouble focusing lately, my thoughts just r...",
+      "expected": "anxiety",
+      "predicted": "anxiety",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I feel empty and I don't know why. Nothing makes me happy an...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I feel so hopeless, like things will never get better...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I've lost interest in things I used to love...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I've been sleeping a lot lately, I guess I'm just tired...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.85,
+      "correct": true
+    },
+    {
+      "message": "I don't really feel like doing much these days, everything t...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "Things have been pretty heavy lately and I can't really expl...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I just feel kind of flat, like nothing really excites me any...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I've been canceling plans a lot lately, I just don't have th...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I feel really disconnected from everyone around me lately...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I don't want to be here anymore...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 1.0,
+      "correct": true
+    },
+    {
+      "message": "I've been thinking about ending it all...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 1.0,
+      "correct": true
+    },
+    {
+      "message": "I'm just so tired of everything, I want it all to stop...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I wonder if anyone would even notice if I just disappeared...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 1.0,
+      "correct": true
+    },
+    {
+      "message": "Sometimes I think things would be a lot easier if I just was...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 1.0,
+      "correct": true
+    },
+    {
+      "message": "I keep having these dark thoughts and I don't know how to ma...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I feel like such a burden to everyone, they'd all be better ...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 1.0,
+      "correct": true
+    },
+    {
+      "message": "I've been thinking a lot about what happens after we're gone...",
+      "expected": "crisis",
+      "predicted": "depression",
+      "confidence": 0.75,
+      "correct": false
+    },
+    {
+      "message": "I just needed someone to talk to today...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "Had a tough day at work but I'm okay...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "Can you give me some encouragement?...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I'm feeling a bit down but nothing serious, just one of thos...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "Today was really hard and I just wanted to vent a little...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I've been a bit more emotional than usual lately, probably j...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I'm exhausted but I know it'll pass, just need to get throug...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I feel a bit lost lately but I think I just need to figure s...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I cried today and I'm not totally sure why, but I feel a bit...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "My chest feels tight all the time and I can't eat properly...",
+      "expected": "anxiety",
+      "predicted": "anxiety",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I've been having really dark thoughts lately but I think I'm...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I don't know if I'm depressed or just going through a rough ...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I keep thinking there's no way out of this situation...",
+      "expected": "crisis",
+      "predicted": "depression",
+      "confidence": 0.9,
+      "correct": false
+    },
+    {
+      "message": "Everything feels pointless but I'm still getting up and goin...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I've been snapping at people I care about and I hate myself ...",
+      "expected": "anxiety",
+      "predicted": "depression",
+      "confidence": 0.9,
+      "correct": false
+    },
+    {
+      "message": "I just feel really numb, like I'm watching my life from outs...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I don't want to worry anyone but I haven't been feeling like...",
+      "expected": "depression",
+      "predicted": "daily",
+      "confidence": 0.85,
+      "correct": false
+    },
+    {
+      "message": "Sometimes the only thing stopping me is thinking about my fa...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 1.0,
+      "correct": true
+    },
+    {
+      "message": "I feel like no matter what I do it's never enough, I'm alway...",
+      "expected": "anxiety",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": false
+    },
+    {
+      "message": "I've been isolating myself but I tell myself it's because I ...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I feel really low today but honestly it happens sometimes, i...",
+      "expected": "daily",
+      "predicted": "depression",
+      "confidence": 0.9,
+      "correct": false
+    },
+    {
+      "message": "Things are hard right now but I'm trying to stay positive...",
+      "expected": "daily",
+      "predicted": "daily",
+      "confidence": 0.9,
+      "correct": true
+    },
+    {
+      "message": "I've been crying every night this week but I can't explain w...",
+      "expected": "depression",
+      "predicted": "depression",
+      "confidence": 0.95,
+      "correct": true
+    },
+    {
+      "message": "I'm scared of my own thoughts lately...",
+      "expected": "crisis",
+      "predicted": "crisis",
+      "confidence": 0.95,
+      "correct": true
+    }
+  ]
+}
